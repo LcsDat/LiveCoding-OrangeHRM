@@ -1,7 +1,9 @@
 package commons;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -277,6 +279,16 @@ public class BasePage {
         return status;
     }
 
+    public boolean isElementDisplayed(String locator, String... restParams) {
+        boolean status;
+        try {
+            status = getWebElement(getDynamicLocator(locator,restParams)).isDisplayed();
+        } catch (NoSuchElementException e) {
+            status = false;
+        }
+        return status;
+    }
+
     public boolean isElementUndisplayed(String locator) {
         setImplicitWait(GlobalConstant.SHORT_TIMEOUT);
         List<WebElement> elements = getListElements(locator);
@@ -290,9 +302,212 @@ public class BasePage {
         }
     }
 
+    public boolean isElemenEnabled(String locator){
+        return getWebElement(locator).isEnabled();
+    }
 
-    public void waitForElementVisible() {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(ExpectedConditions.visibilityOf())
+    public void switchToIFrame(String locator){
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                ExpectedConditions.frameToBeAvailableAndSwitchToIt(getWebElement(locator)));
+    }
+
+    public void switchToDefaultContent(String locator){
+        driver.switchTo().defaultContent();
+    }
+
+    public void hoverToElement(String locator){
+        new Actions(driver).moveToElement(getWebElement(locator)).perform();
+    }
+
+    public void doubleClickToElement(String locator){
+        new Actions(driver).doubleClick(getWebElement(locator)).perform();
+    }
+
+    public void rightClickToElement(String locator){
+        new Actions(driver).contextClick(getWebElement(locator)).perform();
+    }
+
+    public void sendKeyboardToElement(String locator, Keys value){
+        new Actions(driver).sendKeys(getWebElement(locator), value).perform();
+    }
+
+    public void dragAndDropElement(String sourcelocator, String targetLocator){
+        new Actions(driver).dragAndDrop(getWebElement(sourcelocator), getWebElement(targetLocator)).perform();
+    }
+
+    public Object executeForBrowser(String javaScript){
+        return ((JavascriptExecutor) driver).executeScript(javaScript);
+    }
+
+    public String getInnerText(){
+        return (String) ((JavascriptExecutor) driver).executeScript(
+                "return document.documentElement.innerText;");
+    }
+
+    public boolean areExpectedTextInInnerText(String expectedText){
+        String actualText = (String) ((JavascriptExecutor) driver).executeScript(
+                "return document.documentElement.innerText.match('" + expectedText + "')[0];");
+        return actualText.equals(expectedText);
+    }
+
+    public void scrollToBottomPage(){
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,document.body.scrollHeight)");
+    }
+
+    public void navigateToUrlByJS(String url){
+        ((JavascriptExecutor) driver).executeScript("window.location = '" + url + "'");
+        sleepInSecond(3);
+    }
+
+    public void highlightElement(String locator){
+        WebElement element = getWebElement(locator);
+        String originalStyle = element.getAttribute("style");
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].setAttribute('style',arguments[1])",
+                "border: 2px solid red; border-style: dashed;");
+        sleepInSecond(2);
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].setAttribute('style', arguments[1])", element, originalStyle);
+    }
+
+    public void clickToElementByJS(String locator){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", getWebElement(locator));
+    }
+
+    public void scrollToElementOnTop(String locator){
+        ((JavascriptExecutor) driver).executeScript
+                ("arguments[0].scrollIntoView(true);", getWebElement(locator));
+    }
+
+    public void scrollToElementOnDown(String locator){
+        ((JavascriptExecutor) driver).executeScript
+                ("arguments[0].scrollIntoView(false);", getWebElement(locator));
+    }
+
+    public void setAttributeInDOM(String locator, String attributeName, String attributeValue){
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].setAttribute('" + attributeName + "', '" + attributeValue + "');",
+                getWebElement(locator));
+    }
+
+    public void removeAttributeInDOM(String locator, String attributeRemove){
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].removeAttribute('" + attributeRemove + "');",
+                getWebElement(locator));
+    }
+
+    public void sendKeysToElementByJS(String locator, String value){
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].setAttribute('value', '" + value +"')", getWebElement(locator));
+    }
+
+    public String getAttributeInDOM(String locator, String attributeName){
+        return (String) ((JavascriptExecutor) driver).executeScript(
+                "return arguments[0].getAttribute('" + attributeName + "');", getWebElement(locator));
+    }
+
+    public String getWebElementValidationMessage(String locator){
+        return (String) ((JavascriptExecutor) driver).executeScript(
+                "return arguments[0].validationMessage;", getWebElement(locator));
+    }
+
+    public boolean isImageLoaded(String locator){
+        return (boolean) ((JavascriptExecutor) driver).executeScript(
+                "return arguments[0].complete && typeof arguments[0].naturalWidth != 'undefined' && arguments[0].naturalWidth > 0", getWebElement(locator));
+    }
+
+
+    public void waitForElementVisible(String locator) {
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
+    }
+
+    public void waitForElementVisible(String locator, String... restParams) {
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.visibilityOfElementLocated(getByLocator(getDynamicLocator(locator,restParams))));
+    }
+
+    public void waitForListElementVisible(String locator){
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.visibilityOfAllElements(getListElements(locator)));
+    }
+
+    public void waitForElementInvisible(String locator){
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator)));
+    }
+
+    public void waitForElementInvisible(String locator, String... restParams){
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.invisibilityOfElementLocated(getByLocator(getDynamicLocator(locator,restParams))));
+    }
+
+    public void waitForElementInvisible(WebElement element){
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.invisibilityOf(element));
+    }
+
+    public void waitForListElementInvisible(String locator){
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.invisibilityOfAllElements(getListElements(locator)));
+    }
+
+    public void waitForElementClickable(String locator){
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.elementToBeClickable(getByLocator(locator)));
+    }
+
+    public void waitForElementClickable(WebElement element){
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public void waitForElementClickable(String locator, String... restParams){
+        new WebDriverWait(driver,
+                Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                        ExpectedConditions.elementToBeClickable(getByLocator(getDynamicLocator(locator,restParams))));
+    }
+
+    public boolean isPageLoadedSuccess(){
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT));
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        ExpectedConditions<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply() {
+                return (Boolean) jsExecutor.executeScript("return (window.jQuery != null) && (jQuery.active ===0;");
+            }
+        };
+
+        ExpectedConditions<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(){
+                return jsExecutor.executeScript(
+                        "return document.readyState").toString().equals("complete");
+            }
+        };
+
+        return explicitWait.until(jQueryLoad) && explicitWait.until(jsLoad);
+    }
+
+    public void uploadMultipleFiles(String... fileNames){
+        String filePath = GlobalConstant.UPLOAD_PATH;
+        String fullFileName = "";
+
+        for(String fileName : fileNames){
+            fullFileName = fullFileName + filePath + fileName + "\n";
+        }
+
+        fullFileName = fullFileName.trim();
+        getWebElement("//input[@type='file']").sendKeys(fullFileName);
     }
 
     public void sleepInSecond(long timeInSecond) {
