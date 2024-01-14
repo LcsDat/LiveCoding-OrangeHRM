@@ -1,12 +1,14 @@
 package commons;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.w3c.dom.DOMStringList;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Set;
 
 public class BasePage {
@@ -103,6 +105,194 @@ public class BasePage {
 
     public Set<Cookie> getBrowserCookies() {
         return driver.manage().getCookies();
+    }
+
+    public void getCookies(Set<Cookie> cookies) {
+        for (Cookie cookie : cookies) {
+            driver.manage().addCookie(cookie);
+        }
+    }
+
+    public void deleteCookies() {
+        driver.manage().deleteAllCookies();
+    }
+
+    public By getByLocator(String locatorInterface) {
+        By by = null;
+        if (locatorInterface.startsWith("XPATH=") || locatorInterface.startsWith("xpath=") || locatorInterface.startsWith("Xpath=") || locatorInterface.startsWith("XPath=") || locatorInterface.startsWith("xPath=")) {
+            by = By.xpath(locatorInterface.substring(6));
+        } else if (locatorInterface.startsWith("CSS=") || locatorInterface.startsWith("css=") || locatorInterface.startsWith("Css=")) {
+            by = By.className(locatorInterface.substring(4));
+        } else if (locatorInterface.startsWith("NAME=") || locatorInterface.startsWith("Name=") || locatorInterface.startsWith("name=")) {
+            by = By.name(locatorInterface.substring(5));
+        } else if (locatorInterface.startsWith("ID=") || locatorInterface.startsWith("Id=") || locatorInterface.startsWith("id=")) {
+            by = By.id(locatorInterface.substring(3));
+        } else if (locatorInterface.startsWith("CLASS=") || locatorInterface.startsWith("Class=") || locatorInterface.startsWith("class=")) {
+            by = By.className(locatorInterface.substring(6));
+        } else if (locatorInterface.startsWith("TAGNAME=") || locatorInterface.startsWith("tagname=") || locatorInterface.startsWith("Tagname=")) {
+            by = By.tagName(locatorInterface.substring(8));
+        }
+        return by;
+    }
+
+    public String getDynamicLocator(String locator, String... restParams) {
+        return String.format(locator, (Object[]) restParams);
+    }
+
+    public WebElement getWebElement(String locator) {
+        return driver.findElement(getByLocator(locator));
+    }
+
+    public List<WebElement> getListElements(String locator) {
+        return driver.findElements(getByLocator(locator));
+    }
+
+    public List<WebElement> getListElements(String locator, String restParams) {
+        return driver.findElements(getByLocator(getDynamicLocator(locator, restParams)));
+    }
+
+    public void clickToElement(String locator) {
+        getWebElement(locator).click();
+    }
+
+    public void clickToElement(String locator, String... restParams) {
+        getWebElement(getDynamicLocator(locator, restParams)).click();
+    }
+
+    public void sendKeysToElement(String locator, String value) {
+        getWebElement(locator).sendKeys(value);
+    }
+
+    public void sendKeysToElement(String locator, String value, String... restParams) {
+        getWebElement(getDynamicLocator(locator, restParams)).sendKeys(value);
+    }
+
+    public String getElementText(String locator) {
+        return getWebElement(locator).getText();
+    }
+
+    public String getElementText(String locator, String... restParams) {
+        return getWebElement(getDynamicLocator(locator, restParams)).getText();
+    }
+
+    public void selectItemInDropdown(String locator, String itemText) {
+        new Select(getWebElement(locator)).selectByVisibleText(itemText);
+    }
+
+    public void selectItemInDropdown(String locator, String itemText, String... restParams) {
+        new Select(getWebElement(getDynamicLocator(locator, restParams))).selectByVisibleText(itemText);
+    }
+
+    /**
+     * Apply for custom dropdown.
+     * Child locators is the list item in the custom dropdown.
+     * Parent locator is parent of child locator.
+     *
+     * @param parentLocator
+     * @param childLocator
+     * @param itemText
+     */
+    public void selectItemInDropdown(String parentLocator, String childLocator, String itemText) {
+        clickToElement(parentLocator);
+        List<WebElement> elements = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childLocator)));
+
+        for (WebElement element : elements) {
+            if (element.getText().equals(itemText)) {
+                element.click();
+                break;
+            }
+        }
+    }
+
+    public String getElementAttribute(String locator, String attributeValue) {
+        return getWebElement(locator).getAttribute(attributeValue);
+    }
+
+    public String getElementCSSValue(String locator, String cssProperty) {
+        return getWebElement(locator).getCssValue(cssProperty);
+    }
+
+    public String convertRGBAToHexaColor(String locator) {
+        return Color.fromString(getElementCSSValue(locator, "background-color")).asHex();
+    }
+
+    public int getElementSizes(String locator) {
+        return getListElements(locator).size();
+    }
+
+    public int getElementSizes(String locator, String restParams) {
+        return getListElements(getDynamicLocator(locator, restParams)).size();
+    }
+
+    /**
+     * Apply for checkbox and radio button
+     *
+     * @param locator
+     */
+    public void checkToElement(String locator) {
+        if (!getWebElement(locator).isSelected()) {
+            clickToElement(locator);
+        }
+    }
+
+    /**
+     * Apply for checkbox and radio button
+     *
+     * @param locator
+     * @param restParams
+     */
+    public void checkToElement(String locator, String restParams) {
+        if (!getWebElement(locator).isSelected()) {
+            clickToElement(getDynamicLocator(locator, restParams));
+        }
+    }
+
+    /**
+     * Only apply for checkbox
+     *
+     * @param locator
+     */
+    public void uncheckToElement(String locator) {
+        if (getWebElement(locator).isSelected()) {
+            clickToElement(locator);
+        }
+    }
+
+    public boolean isElementSelected(String locator) {
+        return getWebElement(locator).isSelected();
+    }
+
+    public void setImplicitWait(long timeout) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeout));
+    }
+
+    public boolean isElementDisplayed(String locator) {
+        boolean status;
+        try {
+            status = getWebElement(locator).isDisplayed();
+        } catch (NoSuchElementException e) {
+            status = false;
+        }
+        return status;
+    }
+
+    public boolean isElementUndisplayed(String locator) {
+        setImplicitWait(GlobalConstant.SHORT_TIMEOUT);
+        List<WebElement> elements = getListElements(locator);
+        setImplicitWait(GlobalConstant.LONG_TIMEOUT);
+        if (elements.size() > 0) {
+            return false;
+        } else if (elements.size() == 1 && !elements.get(0).isDisplayed()) {
+            return true;
+        } else {
+            return true;
+        }
+    }
+
+
+    public void waitForElementVisible() {
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT)).until(ExpectedConditions.visibilityOf())
     }
 
     public void sleepInSecond(long timeInSecond) {
