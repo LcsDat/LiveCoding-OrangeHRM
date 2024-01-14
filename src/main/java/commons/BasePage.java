@@ -1,6 +1,7 @@
 package commons;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -100,6 +101,10 @@ public class BasePage {
         driver.switchTo().window(expectedWindow);
     }
 
+    public Set<Cookie> getBrowserCookies() {
+        return driver.manage().getCookies();
+    }
+
     public void sleepInSecond(long timeInSecond) {
         try {
             Thread.sleep(timeInSecond * 1000);
@@ -107,4 +112,5 @@ public class BasePage {
             throw new RuntimeException(e);
         }
     }
+
 }
