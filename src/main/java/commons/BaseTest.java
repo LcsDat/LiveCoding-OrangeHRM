@@ -32,6 +32,22 @@ public class BaseTest {
         return driver;
     }
 
+    protected WebDriver getBrowserDriver(String browserName) {
+        BrowserList browser = BrowserList.valueOf(browserName.toUpperCase());
+        switch (browser) {
+            case CHROME -> driver = new ChromeDriver();
+            case FIREFOX -> driver = new FirefoxDriver();
+            case EDGE -> driver = new EdgeDriver();
+            default -> throw new RuntimeException("Browser name is not valid.");
+        }
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT));
+        driver.manage().window().maximize();
+        driver.get(GlobalConstant.URL);
+
+        return driver;
+    }
+
     protected void closeBrowser() {
         String cmd = "";
         try {
