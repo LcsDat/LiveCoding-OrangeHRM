@@ -482,13 +482,13 @@ public class BasePage {
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT));
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
         ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+
             @Override
             public Boolean apply(WebDriver driver) {
 
                 return (Boolean) jsExecutor.executeScript("return (window.jQuery != null) && (jQuery.active === 0);");
             }
         } ;
-
 
         ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
             @Override
