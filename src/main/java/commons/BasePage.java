@@ -20,6 +20,7 @@ public class BasePage {
         this.driver = driver;
     }
 
+
     public void openURL(String url) {
         driver.get(url);
     }
@@ -480,19 +481,21 @@ public class BasePage {
     public boolean isPageLoadedSuccess(){
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT));
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-        ExpectedConditions<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+        ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply() {
-                return (Boolean) jsExecutor.executeScript("return (window.jQuery != null) && (jQuery.active ===0;");
-            }
-        };
+            public Boolean apply(WebDriver driver) {
 
-        ExpectedConditions<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(){
-                return jsExecutor.executeScript(
-                        "return document.readyState").toString().equals("complete");
+                return (Boolean) jsExecutor.executeScript("return (window.jQuery != null) && (jQuery.active === 0);");
             }
+        } ;
+
+
+        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                return jsExecutor.executeScript("return document.readyState").toString().equals("complete");
+            }
+
         };
 
         return explicitWait.until(jQueryLoad) && explicitWait.until(jsLoad);
