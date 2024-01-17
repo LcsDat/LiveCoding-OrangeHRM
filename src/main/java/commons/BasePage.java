@@ -192,9 +192,9 @@ public class BasePage {
      * Child locators is the list item in the custom dropdown.
      * Parent locator is parent of child locator.
      *
-     * @param parentLocator
-     * @param childLocator
-     * @param itemText
+     * @param parentLocator: the combobox locator
+     * @param childLocator: list item of the combobox
+     * @param itemText: visible value of the item
      */
     public void selectItemInDropdown(String parentLocator, String childLocator, String itemText) {
         clickToElement(parentLocator);
