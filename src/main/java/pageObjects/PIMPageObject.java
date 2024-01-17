@@ -4,7 +4,7 @@ import commons.BasePage;
 import interfaces.PIMPageUI;
 import org.openqa.selenium.WebDriver;
 
-public class PIMPageObject extends BasePage {
+public class PIMPageObject extends PIMHeaderPageObject {
 
     public PIMPageObject(WebDriver driver) {
         super(driver);

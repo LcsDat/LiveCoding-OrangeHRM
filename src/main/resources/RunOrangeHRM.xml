@@ -11,7 +11,7 @@
     <test name="Run on Chrome" >
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="TC_01_Login"/>
+            <class name="PIM_Add_Employee"/>
 
         </classes>
     </test>

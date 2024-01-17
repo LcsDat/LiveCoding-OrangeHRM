@@ -15,8 +15,4 @@ public class AdminPageObject extends BasePage {
         sendKeysToElement(AdminPageUI.USERNAME_TEXTBOX, value);
     }
 
-    public void clickToPimLink() {
-        waitForElementClickable(AdminPageUI.PIM_LINK);
-        clickToElement(AdminPageUI.PIM_LINK);
-    }
 }

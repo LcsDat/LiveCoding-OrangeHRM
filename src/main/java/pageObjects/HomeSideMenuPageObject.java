@@ -5,11 +5,12 @@ import commons.PageGenerator;
 import interfaces.HomeSideMenuPageUI;
 import org.openqa.selenium.WebDriver;
 
-public class HomeSideMenuPageObject extends BasePage{
+public class HomeSideMenuPageObject extends BasePage {
     WebDriver driver;
+
     public HomeSideMenuPageObject(WebDriver driver) {
         super(driver);
-        this.driver =driver;
+        this.driver = driver;
     }
 
     public AdminPageObject openAdminPage() {
@@ -23,6 +24,6 @@ public class HomeSideMenuPageObject extends BasePage{
         waitForElementVisible(HomeSideMenuPageUI.PIM_LINK);
         clickToElement(HomeSideMenuPageUI.PIM_LINK);
 
-        return PageGenerator.getpimPage(driver);
+        return PageGenerator.getPIMPage(driver);
     }
 }
