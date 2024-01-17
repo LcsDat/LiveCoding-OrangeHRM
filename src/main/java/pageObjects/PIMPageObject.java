@@ -1,9 +1,11 @@
 package pageObjects;
 
+import commons.BasePage;
 import interfaces.PIMPageUI;
 import org.openqa.selenium.WebDriver;
 
-public class PIMPageObject extends HomeSideMenuPageObject {
+public class PIMPageObject extends BasePage {
+
     public PIMPageObject(WebDriver driver) {
         super(driver);
     }

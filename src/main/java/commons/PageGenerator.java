@@ -1,13 +1,14 @@
 package commons;
 
 import org.openqa.selenium.WebDriver;
-import pageObjects.AdminPageObject;
-import pageObjects.HomePageObject;
-import pageObjects.LoginPageObject;
-import pageObjects.PIMPageObject;
+import pageObjects.*;
 
-public class PageGenerator {
+public class PageGenerator extends BasePage{
 
+
+    public PageGenerator(WebDriver driver) {
+        super(driver);
+    }
 
     public static LoginPageObject getLoginPage(WebDriver driver){
         return new LoginPageObject(driver);
@@ -23,6 +24,10 @@ public class PageGenerator {
 
     public static PIMPageObject getpimPage(WebDriver driver){
         return new PIMPageObject(driver);
+    }
+
+    public static HomeSideMenuPageObject getHomeSideMenu(WebDriver driver){
+        return new HomeSideMenuPageObject(driver);
     }
 
 

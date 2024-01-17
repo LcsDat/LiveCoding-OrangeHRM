@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 
 public class LoginPageObject extends BasePage {
 
-
     public LoginPageObject(WebDriver driver) {
         super(driver);
     }
