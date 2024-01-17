@@ -20,7 +20,6 @@ public class BasePage {
         this.driver = driver;
     }
 
-
     public void openURL(String url) {
         driver.get(url);
     }
@@ -125,7 +124,7 @@ public class BasePage {
         if (locatorInterface.startsWith("XPATH=") || locatorInterface.startsWith("xpath=") || locatorInterface.startsWith("Xpath=") || locatorInterface.startsWith("XPath=") || locatorInterface.startsWith("xPath=")) {
             by = By.xpath(locatorInterface.substring(6));
         } else if (locatorInterface.startsWith("CSS=") || locatorInterface.startsWith("css=") || locatorInterface.startsWith("Css=")) {
-            by = By.className(locatorInterface.substring(4));
+            by = By.cssSelector(locatorInterface.substring(4));
         } else if (locatorInterface.startsWith("NAME=") || locatorInterface.startsWith("Name=") || locatorInterface.startsWith("name=")) {
             by = By.name(locatorInterface.substring(5));
         } else if (locatorInterface.startsWith("ID=") || locatorInterface.startsWith("Id=") || locatorInterface.startsWith("id=")) {
@@ -163,10 +162,12 @@ public class BasePage {
     }
 
     public void sendKeysToElement(String locator, String value) {
+        getWebElement(locator).clear();
         getWebElement(locator).sendKeys(value);
     }
 
     public void sendKeysToElement(String locator, String value, String... restParams) {
+        getWebElement(getDynamicLocator(locator,restParams)).clear();
         getWebElement(getDynamicLocator(locator, restParams)).sendKeys(value);
     }
 
@@ -520,5 +521,7 @@ public class BasePage {
             throw new RuntimeException(e);
         }
     }
+
+
 
 }
