@@ -2,6 +2,7 @@ package pageObjects;
 
 import commons.BasePage;
 import interfaces.AddEmployeePageUI;
+import interfaces.AdminPageUI;
 import org.openqa.selenium.WebDriver;
 
 public class AddEmployeePageObject extends BasePage {
@@ -42,5 +43,15 @@ public class AddEmployeePageObject extends BasePage {
     public void setTextToLastNameTextbox(String value) {
         waitForElementVisible(AddEmployeePageUI.LAST_NAME_TEXTBOX);
         sendKeysToElement(AddEmployeePageUI.LAST_NAME_TEXTBOX,value);
+    }
+
+    public void setTextToId(String value) {
+        waitForElementVisible(AddEmployeePageUI.ID_TEXTBOX);
+        sendKeysToElement(AddEmployeePageUI.ID_TEXTBOX,value);
+    }
+
+    public String getIdErrorMessageText() {
+        waitForElementVisible(AddEmployeePageUI.ID_ERROR_MESSAGE);
+        return getElementText(AddEmployeePageUI.ID_ERROR_MESSAGE);
     }
 }

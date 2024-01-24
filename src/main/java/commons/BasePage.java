@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class BasePage {
@@ -521,5 +522,7 @@ public class BasePage {
         }
     }
 
-
+    public static int getRandomNumber(int boundary){
+        return new Random().nextInt(boundary);
+    }
 }
