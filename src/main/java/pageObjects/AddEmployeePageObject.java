@@ -36,22 +36,27 @@ public class AddEmployeePageObject extends BasePage {
     }
 
     public void setTextToFirstNameTextbox(String value) {
-        waitForElementVisible(AddEmployeePageUI.FIRST_NAME_TEXTBOX);
+        waitForElementClickable(AddEmployeePageUI.FIRST_NAME_TEXTBOX);
         sendKeysToElement(AddEmployeePageUI.FIRST_NAME_TEXTBOX,value);
     }
 
     public void setTextToLastNameTextbox(String value) {
-        waitForElementVisible(AddEmployeePageUI.LAST_NAME_TEXTBOX);
+        waitForElementClickable(AddEmployeePageUI.LAST_NAME_TEXTBOX);
         sendKeysToElement(AddEmployeePageUI.LAST_NAME_TEXTBOX,value);
     }
 
     public void setTextToId(String value) {
-        waitForElementVisible(AddEmployeePageUI.ID_TEXTBOX);
+        waitForElementClickable(AddEmployeePageUI.ID_TEXTBOX);
         sendKeysToElement(AddEmployeePageUI.ID_TEXTBOX,value);
     }
 
     public String getIdErrorMessageText() {
         waitForElementVisible(AddEmployeePageUI.ID_ERROR_MESSAGE);
         return getElementText(AddEmployeePageUI.ID_ERROR_MESSAGE);
+    }
+
+    public String getDuplicateIdErrorMessageText() {
+        waitForElementVisible(AddEmployeePageUI.ID_DUPLICATE_ERROR_MESSAGE);
+        return getElementText(AddEmployeePageUI.ID_DUPLICATE_ERROR_MESSAGE);
     }
 }

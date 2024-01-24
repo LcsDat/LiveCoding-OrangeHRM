@@ -19,6 +19,8 @@ public class PIM_Add_Employee extends BaseTest {
     AddEmployeePageObject addEmployeePage;
     PersonalDetailsPageObject personalDetailsPage;
 
+    String adminOpenUsername = "Admin";
+    String adminOpenPassword = "admin123";
     String adminUsername = "hideyashy";
     String adminPassword = "#Onimusha00";
     String invalidLength = "abcdefghijklmnopqrstuvwxyzABCEFGH";
@@ -81,6 +83,7 @@ public class PIM_Add_Employee extends BaseTest {
         addEmployeePage.clickToSaveButton();
 
         personalDetailsPage = PageGenerator.getPersonalDetailsPage(driver);
+        personalDetailsPage.waitForPersonalPageLoadSuccess();
 
         Assert.assertTrue(personalDetailsPage.isPersonalDetailsHeaderDisplayed());
         Assert.assertEquals(personalDetailsPage.getFirstNameTextboxValue(), validFirstName);
@@ -90,6 +93,16 @@ public class PIM_Add_Employee extends BaseTest {
 
     @Test
     public void Register_04_Id_Is_Unique() {
+        personalDetailsPage.clickToEmployeeListLink();
+
+        employeeListPage = PageGenerator.getEmployeeListPage(driver);
+
+        employeeListPage.clickToAddButton();
+        addEmployeePage.setTextToId(validId);
+        addEmployeePage.clickToSaveButton();
+        addEmployeePage.sleepInSecond(5);
+
+        Assert.assertEquals(addEmployeePage.getDuplicateIdErrorMessageText(), "Employee Id already exists");
 
     }
     @AfterClass

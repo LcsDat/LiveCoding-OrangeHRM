@@ -162,7 +162,7 @@ public class BasePage {
     }
 
     public void sendKeysToElement(String locator, String value) {
-        getWebElement(locator).clear();
+        clearText(locator);
         getWebElement(locator).sendKeys(value);
     }
 
@@ -512,6 +512,16 @@ public class BasePage {
 
         fullFileName = fullFileName.trim();
         getWebElement("//input[@type='file']").sendKeys(fullFileName);
+    }
+
+    public void clearText(String locator){
+        while(!driver.findElement(getByLocator(locator)).getAttribute("value").equals("")){
+            driver.findElement(getByLocator(locator)).clear();
+            if (!driver.findElement(getByLocator(locator)).getAttribute("value").equals("")){
+                driver.findElement(getByLocator(locator)).sendKeys(Keys.chord(Keys.CONTROL,"a",Keys.DELETE));
+                break;
+            }
+        }
     }
 
     public void sleepInSecond(long timeInSecond) {
