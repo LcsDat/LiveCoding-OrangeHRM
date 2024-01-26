@@ -90,4 +90,8 @@ public class BaseTest {
             }
         }
     }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
 }
