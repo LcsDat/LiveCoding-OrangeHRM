@@ -1,6 +1,10 @@
 import commons.BasePage;
 import commons.BaseTest;
 import commons.PageGenerator;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -26,7 +30,7 @@ public class PIM_Add_Employee extends BaseTest {
     String invalidLength = "abcdefghijklmnopqrstuvwxyzABCEFGH";
     String validFirstName = "Dat" + BasePage.getRandomNumber(99999);
     String validLastName = "Le" + BasePage.getRandomNumber(99999);
-    String validId = String.valueOf(BasePage.getRandomNumber(9999)) ;
+    String validId = String.valueOf(BasePage.getRandomNumber(9999));
 
     @Parameters({"browser", "url"})
     @BeforeClass
@@ -37,6 +41,9 @@ public class PIM_Add_Employee extends BaseTest {
 //        loginPage.sleepInSecond(5);
     }
 
+    @Description("Resister 01")
+    @Story("Add Employee")
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void Register_01_First_Name_And_Last_Name_Required() {
         loginPage.setTextToUsernameTextbox(adminUsername);
@@ -59,8 +66,8 @@ public class PIM_Add_Employee extends BaseTest {
         addEmployeePage.clickToSaveButton();
 //        addEmployeePage.sleepInSecond(10);
 
-        Assert.assertEquals(addEmployeePage.getFirstNameRequiredErrorMessageText(),"Required");
-        Assert.assertEquals(addEmployeePage.getLastNameRequiredErrorMessageText(),"Required");
+        Assert.assertEquals(addEmployeePage.getFirstNameRequiredErrorMessageText(), "Required");
+        Assert.assertEquals(addEmployeePage.getLastNameRequiredErrorMessageText(), "Required");
     }
 
     @Test
@@ -69,9 +76,9 @@ public class PIM_Add_Employee extends BaseTest {
         addEmployeePage.setTextToLastNameTextbox(invalidLength);
         addEmployeePage.setTextToId(invalidLength);
 
-        Assert.assertEquals(addEmployeePage.getFirstNameCharacterErrorMessageText(),"Should not exceed 30 characters");
-        Assert.assertEquals(addEmployeePage.getLastNameCharacterErrorMessageText(),"Should not exceed 30 characters");
-        Assert.assertEquals(addEmployeePage.getIdErrorMessageText(),"Should not exceed 10 characters");
+        Assert.assertEquals(addEmployeePage.getFirstNameCharacterErrorMessageText(), "Should not exceed 30 characters");
+        Assert.assertEquals(addEmployeePage.getLastNameCharacterErrorMessageText(), "Should not exceed 30 characters");
+        Assert.assertEquals(addEmployeePage.getIdErrorMessageText(), "Should not exceed 10 characters");
         addEmployeePage.sleepInSecond(5);
     }
 
@@ -105,6 +112,7 @@ public class PIM_Add_Employee extends BaseTest {
         Assert.assertEquals(addEmployeePage.getDuplicateIdErrorMessageText(), "Employee Id already exists");
 
     }
+
     @AfterClass
     public void After_Test() {
         closeBrowser();

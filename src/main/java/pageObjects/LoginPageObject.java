@@ -2,6 +2,7 @@ package pageObjects;
 
 import commons.BasePage;
 import interfaces.LoginPageUI;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPageObject extends BasePage {
@@ -10,6 +11,7 @@ public class LoginPageObject extends BasePage {
         super(driver);
     }
 
+    @Step("Input username textbox with value: {0}")
     public void setTextToUsernameTextbox(String value) {
         waitForElementClickable(LoginPageUI.USERNAME_TEXTBOX);
         sendKeysToElement(LoginPageUI.USERNAME_TEXTBOX,value);
