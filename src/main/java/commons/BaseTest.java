@@ -127,9 +127,8 @@ public class BaseTest {
             Assert.assertTrue(condition);
         } catch (Throwable e) {
             pass = false;
-
-//            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
-//            Reporter.getCurrentTestResult().setThrowable(e);
+            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+            Reporter.getCurrentTestResult().setThrowable(e);
         }
         return pass;
     }
@@ -146,8 +145,8 @@ public class BaseTest {
             Assert.assertFalse(condition);
         } catch (Throwable e) {
             pass = false;
-//            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
-//            Reporter.getCurrentTestResult().setThrowable(e);
+            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+            Reporter.getCurrentTestResult().setThrowable(e);
         }
         return pass;
     }
@@ -165,8 +164,8 @@ public class BaseTest {
             Assert.assertEquals(actual, expected);
         } catch (Throwable e) {
             pass = false;
-//            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
-//            Reporter.getCurrentTestResult().setThrowable(e);
+            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+            Reporter.getCurrentTestResult().setThrowable(e);
         }
         return pass;
     }

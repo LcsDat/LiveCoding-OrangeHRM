@@ -43,8 +43,8 @@ public class PIM_Add_Employee extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void Register_01_First_Name_And_Last_Name_Required() {
-        loginPage.setTextToUsernameTextbox(adminOpenUsername);
-        loginPage.setTextToPasswordTextbox(adminOpenPassword);
+        loginPage.setTextToUsernameTextbox(adminUsername);
+        loginPage.setTextToPasswordTextbox(adminPassword);
         loginPage.clickToLoginButton();
 
         homePage = PageGenerator.getHomePage(driver);
@@ -73,10 +73,10 @@ public class PIM_Add_Employee extends BaseTest {
         addEmployeePage.setTextToLastNameTextbox(invalidLength);
         addEmployeePage.setTextToId(invalidLength);
 
-        Assert.assertEquals(addEmployeePage.getFirstNameCharacterErrorMessageText(), "Should not exceed 30 characters");
-        Assert.assertEquals(addEmployeePage.getLastNameCharacterErrorMessageText(), "Should not exceed 30 characters");
-        Assert.assertEquals(addEmployeePage.getIdErrorMessageText(), "Should not exceed 10 characters");
-        addEmployeePage.sleepInSecond(5);
+        verifyEquals(addEmployeePage.getFirstNameCharacterErrorMessageText(), "Should not exceed 30 characters");
+        verifyEquals(addEmployeePage.getLastNameCharacterErrorMessageText(), "Should not exceed 30 characters");
+        verifyEquals(addEmployeePage.getIdErrorMessageText(), "Should not exceed 10 characters");
+//        addEmployeePage.sleepInSecond(5);
     }
 
     @Test
