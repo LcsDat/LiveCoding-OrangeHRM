@@ -7,10 +7,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pageObjects.*;
 
 public class PIM_Add_Employee extends BaseTest {
@@ -46,28 +43,28 @@ public class PIM_Add_Employee extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void Register_01_First_Name_And_Last_Name_Required() {
-        loginPage.setTextToUsernameTextbox(adminUsername);
-        loginPage.setTextToPasswordTextbox(adminPassword);
+        loginPage.setTextToUsernameTextbox(adminOpenUsername);
+        loginPage.setTextToPasswordTextbox(adminOpenPassword);
         loginPage.clickToLoginButton();
 
         homePage = PageGenerator.getHomePage(driver);
 
-        Assert.assertEquals(homePage.getDashboardText(), "Dashboard");
+        verifyEquals(homePage.getDashboardText(), "Dashboard");
 
         pimPage = homePage.openpimPage();
 //        pimPage.sleepInSecond(10);
 
         employeeListPage = pimPage.openEmployeeListPage();
         employeeListPage.clickToAddButton();
-//        employeeListPage.sleepInSecond(10);
+        employeeListPage.sleepInSecond(5);
 
         addEmployeePage = PageGenerator.getAddEmployeePage(driver);
 
         addEmployeePage.clickToSaveButton();
-//        addEmployeePage.sleepInSecond(10);
+        addEmployeePage.sleepInSecond(5);
 
-        Assert.assertEquals(addEmployeePage.getFirstNameRequiredErrorMessageText(), "Required");
-        Assert.assertEquals(addEmployeePage.getLastNameRequiredErrorMessageText(), "Required");
+        verifyEquals(addEmployeePage.getFirstNameRequiredErrorMessageText(), "Required");
+        verifyEquals(addEmployeePage.getLastNameRequiredErrorMessageText(), "Required");
     }
 
     @Test

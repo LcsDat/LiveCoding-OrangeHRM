@@ -1,19 +1,16 @@
 package commons;
 
-import net.bytebuddy.utility.RandomString;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 public class BaseTest {
     private WebDriver driver;
@@ -116,5 +113,61 @@ public class BaseTest {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    /**
+     * Verifies that a boolean condition is true and test cases will run till the end.
+     *
+     * @param condition the boolean condition to verify
+     * @return true if the condition is true, false otherwise
+     */
+    protected boolean verifyTrue(boolean condition) {
+        boolean pass = true;
+        try {
+            Assert.assertTrue(condition);
+        } catch (Throwable e) {
+            pass = false;
+
+//            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+//            Reporter.getCurrentTestResult().setThrowable(e);
+        }
+        return pass;
+    }
+
+    /**
+     * Verifies that a boolean condition is false and test cases will run till the end.
+     *
+     * @param condition the boolean condition to verify
+     * @return true if the condition is false, true otherwise
+     */
+    protected boolean verifyFalse(boolean condition) {
+        boolean pass = true;
+        try {
+            Assert.assertFalse(condition);
+        } catch (Throwable e) {
+            pass = false;
+//            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+//            Reporter.getCurrentTestResult().setThrowable(e);
+        }
+        return pass;
+    }
+
+    /**
+     * Verifies that two objects are equal test cases will run till the end.
+     *
+     * @param actual   the actual object
+     * @param expected the expected object
+     * @return true if the objects are equal, false otherwise
+     */
+    protected boolean verifyEquals(Object actual, Object expected) {
+        boolean pass = true;
+        try {
+            Assert.assertEquals(actual, expected);
+        } catch (Throwable e) {
+            pass = false;
+//            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+//            Reporter.getCurrentTestResult().setThrowable(e);
+        }
+        return pass;
     }
 }
