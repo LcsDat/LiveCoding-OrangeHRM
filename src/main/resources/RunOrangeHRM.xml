@@ -3,7 +3,7 @@
 <suite name="OrangeHRM Test Suite">
 
     <listeners>
-<!--        <listener class-name="reportConfig.AllureTestListener"/>-->
+        <listener class-name="reportConfig.AllureTestListener"/>
         <listener class-name="commons.MethodListener"></listener>
     </listeners>
 

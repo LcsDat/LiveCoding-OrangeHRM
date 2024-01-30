@@ -43,27 +43,41 @@ public class PIM_Add_Employee extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void Register_01_First_Name_And_Last_Name_Required() {
+        log.info("Register 01 - Step 01: Set " + adminUsername +" to Username text box.");
         loginPage.setTextToUsernameTextbox(adminUsername);
+
+        log.info("Register 01 - Step 02: Set text to Password text box.");
         loginPage.setTextToPasswordTextbox(adminPassword);
+
+        log.info("Register 01 - Step 03: Click to Login button.");
         loginPage.clickToLoginButton();
 
         homePage = PageGenerator.getHomePage(driver);
 
+        log.info("Register 01 - Step 04: Verify Dashboard page have Dashboard header.");
         verifyEquals(homePage.getDashboardText(), "Dashboard");
+
 
         pimPage = homePage.openpimPage();
 //        pimPage.sleepInSecond(10);
 
+        log.info("Register 01 - Step 05: Navigate to PIM page.");
         employeeListPage = pimPage.openEmployeeListPage();
+
+        log.info("Register 01 - Step 06: Click to Add button.");
         employeeListPage.clickToAddButton();
-        employeeListPage.sleepInSecond(5);
+//        employeeListPage.sleepInSecond(5);
 
         addEmployeePage = PageGenerator.getAddEmployeePage(driver);
 
+        log.info("Register 01 - Step 07: Click to Save Button.");
         addEmployeePage.clickToSaveButton();
-        addEmployeePage.sleepInSecond(5);
+//        addEmployeePage.sleepInSecond(5);
 
+        log.info("Register 01 - Step 08: Verify First Name is required.");
         verifyEquals(addEmployeePage.getFirstNameRequiredErrorMessageText(), "Required");
+
+        log.info("Register 01 - Step 09: Verify Last Name is required.");
         verifyEquals(addEmployeePage.getLastNameRequiredErrorMessageText(), "Required");
     }
 
