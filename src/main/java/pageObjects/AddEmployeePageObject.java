@@ -59,4 +59,8 @@ public class AddEmployeePageObject extends BasePage {
         waitForElementVisible(AddEmployeePageUI.ID_DUPLICATE_ERROR_MESSAGE);
         return getElementText(AddEmployeePageUI.ID_DUPLICATE_ERROR_MESSAGE);
     }
+
+    public void waitForIconLoadSuccess() {
+        waitForElementInvisible(AddEmployeePageUI.ICON_LOADING);
+    }
 }

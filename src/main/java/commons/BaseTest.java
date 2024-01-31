@@ -49,7 +49,7 @@ public class BaseTest {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstant.LONG_TIMEOUT));
         driver.manage().window().maximize();
-        driver.get(GlobalConstant.URL);
+        driver.get(GlobalConstant.LOCAL_URL);
 
         return driver;
     }

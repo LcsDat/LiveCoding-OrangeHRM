@@ -43,11 +43,11 @@ public class PIM_Add_Employee extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void Register_01_First_Name_And_Last_Name_Required() {
-        log.info("Register 01 - Step 01: Set " + adminUsername +" to Username text box.");
-        loginPage.setTextToUsernameTextbox(adminUsername);
+        log.info("Register 01 - Step 01: Set " + adminOpenPassword +" to Username text box.");
+        loginPage.setTextToUsernameTextbox(adminOpenUsername);
 
         log.info("Register 01 - Step 02: Set text to Password text box.");
-        loginPage.setTextToPasswordTextbox(adminPassword);
+        loginPage.setTextToPasswordTextbox(adminOpenPassword);
 
         log.info("Register 01 - Step 03: Click to Login button.");
         loginPage.clickToLoginButton();
@@ -66,16 +66,16 @@ public class PIM_Add_Employee extends BaseTest {
 
         log.info("Register 01 - Step 06: Click to Add button.");
         employeeListPage.clickToAddButton();
-//        employeeListPage.sleepInSecond(5);
 
         addEmployeePage = PageGenerator.getAddEmployeePage(driver);
 
+        addEmployeePage.waitForIconLoadSuccess();
+
         log.info("Register 01 - Step 07: Click to Save Button.");
         addEmployeePage.clickToSaveButton();
-//        addEmployeePage.sleepInSecond(5);
 
         log.info("Register 01 - Step 08: Verify First Name is required.");
-        verifyEquals(addEmployeePage.getFirstNameRequiredErrorMessageText(), "Required");
+        verifyEquals(addEmployeePage.getFirstNameRequiredErrorMessageText(), "Required.");
 
         log.info("Register 01 - Step 09: Verify Last Name is required.");
         verifyEquals(addEmployeePage.getLastNameRequiredErrorMessageText(), "Required");
@@ -83,14 +83,23 @@ public class PIM_Add_Employee extends BaseTest {
 
     @Test
     public void Register_02_First_Name_And_Last_Name_Max_30_Characters() {
+        log.info("Register 02 - Step 01: Set "+invalidLength +" to First Name text box.");
         addEmployeePage.setTextToFirstNameTextbox(invalidLength);
+
+        log.info("Register 02 - Step 02: Set "+invalidLength +" to Last Name text box.");
         addEmployeePage.setTextToLastNameTextbox(invalidLength);
+
+        log.info("Register 02 - Step 03: Set "+invalidLength +" to Id text box.");
         addEmployeePage.setTextToId(invalidLength);
 
-        verifyEquals(addEmployeePage.getFirstNameCharacterErrorMessageText(), "Should not exceed 30 characters");
+        log.info("Register 02 - Step 04: Verify max length of First Name is 30 characters.");
+        verifyEquals(addEmployeePage.getFirstNameCharacterErrorMessageText(), "Should not exceed 29 characters");
+
+        log.info("Register 02 - Step 05: Verify max length of Last Name is 30 characters.");
         verifyEquals(addEmployeePage.getLastNameCharacterErrorMessageText(), "Should not exceed 30 characters");
+
+        log.info("Register 02 - Step 05: Verify max length of ID is 10 characters.");
         verifyEquals(addEmployeePage.getIdErrorMessageText(), "Should not exceed 10 characters");
-//        addEmployeePage.sleepInSecond(5);
     }
 
     @Test

@@ -11,7 +11,6 @@ public class LoginPageObject extends BasePage {
         super(driver);
     }
 
-    @Step("Input username textbox with value: {0}")
     public void setTextToUsernameTextbox(String value) {
         waitForElementClickable(LoginPageUI.USERNAME_TEXTBOX);
         sendKeysToElement(LoginPageUI.USERNAME_TEXTBOX,value);
