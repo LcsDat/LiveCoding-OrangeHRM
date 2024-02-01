@@ -1,3 +1,4 @@
+import utils.ActionHelper;
 import commons.BasePage;
 import commons.BaseTest;
 import commons.PageGenerator;
@@ -13,6 +14,7 @@ import pageObjects.*;
 public class PIM_Add_Employee extends BaseTest {
     WebDriver driver;
 
+    ActionHelper actionHelper;
     LoginPageObject loginPage;
     HomePageObject homePage;
     PIMPageObject pimPage;
@@ -33,7 +35,6 @@ public class PIM_Add_Employee extends BaseTest {
     @BeforeClass
     public void Before_Test(String browser, String url) {
         driver = getBrowserDriver(browser, url);
-
         loginPage = PageGenerator.getLoginPage(driver);
 //        loginPage.sleepInSecond(5);
     }
@@ -56,6 +57,7 @@ public class PIM_Add_Employee extends BaseTest {
 
         log.info("Register 01 - Step 04: Verify Dashboard page have Dashboard header.");
         verifyEquals(homePage.getDashboardText(), "Dashboard");
+        ActionHelper.takeScreenshot("Dashboard");
 
 
         pimPage = homePage.openpimPage();

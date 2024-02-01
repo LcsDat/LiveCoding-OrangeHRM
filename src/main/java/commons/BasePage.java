@@ -36,6 +36,8 @@ public class BasePage {
         return driver.getPageSource();
     }
 
+
+
     public void backToPage() {
         driver.navigate().back();
     }
@@ -534,5 +536,13 @@ public class BasePage {
 
     public static int getRandomNumber(int boundary){
         return new Random().nextInt(boundary);
+    }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
     }
 }
