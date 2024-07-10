@@ -1,5 +1,6 @@
 package commons;
 
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -9,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeSuite;
+import reportConfig.AllureTestListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -128,16 +130,18 @@ public class BaseTest {
      * @param condition the boolean condition to verify
      * @return true if the condition is true, false otherwise
      */
+    @Step("Verify true")
     protected boolean verifyTrue(boolean condition) {
         boolean pass = true;
         try {
             Assert.assertTrue(condition);
-            log.info("PASSED");
         } catch (Throwable e) {
-            log.info("FAILED");
             pass = false;
             VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
             Reporter.getCurrentTestResult().setThrowable(e);
+        }
+        if (pass){
+            AllureTestListener.saveScreenshotPNG("TC01",driver);
         }
         return pass;
     }
@@ -148,13 +152,12 @@ public class BaseTest {
      * @param condition the boolean condition to verify
      * @return true if the condition is false, true otherwise
      */
+    @Step("Verify true")
     protected boolean verifyFalse(boolean condition) {
         boolean pass = true;
         try {
             Assert.assertFalse(condition);
-            log.info("PASSED");
         } catch (Throwable e) {
-            log.info("FAILED");
             pass = false;
             VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
             Reporter.getCurrentTestResult().setThrowable(e);
@@ -169,16 +172,18 @@ public class BaseTest {
      * @param expected the expected object
      * @return true if the objects are equal, false otherwise
      */
+    @Step("Verify equal")
     protected boolean verifyEquals(Object actual, Object expected) {
         boolean pass = true;
         try {
             Assert.assertEquals(actual, expected);
-            log.info("PASSED");
         } catch (Throwable e) {
-            log.info("FAILED");
             pass = false;
             VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
             Reporter.getCurrentTestResult().setThrowable(e);
+        }
+        if (pass){
+            AllureTestListener.saveScreenshotPNG("TC02",driver);
         }
         return pass;
     }

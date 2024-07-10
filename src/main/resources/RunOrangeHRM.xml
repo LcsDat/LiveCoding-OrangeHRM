@@ -7,7 +7,8 @@
         <listener class-name="commons.MethodListener"/>
     </listeners>
 
-    <parameter name="url" value="https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"/>
+    <parameter name="url1" value="https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"/>
+    <parameter name="url2" value="http://localhost:90/"/>
     <test name="Run on Chrome" >
         <parameter name="browser" value="chrome"/>
         <classes>
