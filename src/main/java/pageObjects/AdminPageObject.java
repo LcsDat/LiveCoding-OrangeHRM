@@ -5,7 +5,8 @@ import interfaces.AdminPageUI;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 
-public class AdminPageObject extends BasePage {
+public class AdminPageObject extends AdminHeaderPageObject {
+
 
     public AdminPageObject(WebDriver driver) {
         super(driver);

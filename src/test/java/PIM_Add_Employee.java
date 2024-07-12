@@ -16,7 +16,6 @@ import utils.ActionHelper;
 public class PIM_Add_Employee extends BaseTest {
     WebDriver driver;
 
-    ActionHelper actionHelper;
     LoginPageObject loginPage;
     HomePageObject homePage;
     PIMPageObject pimPage;

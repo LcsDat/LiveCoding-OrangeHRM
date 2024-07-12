@@ -28,4 +28,11 @@ public class LoginPageObject extends BasePage {
         waitForElementClickable(LoginPageUI.LOGIN_BUTTON);
         clickToElement(LoginPageUI.LOGIN_BUTTON);
     }
+
+    @Step("Login with Admin account")
+    public void loginAdminLevel(String... value){
+        setTextToUsernameTextbox(value[0]);
+        setTextToPasswordTextbox(value[1]);
+        clickToLoginButton();
+    }
 }

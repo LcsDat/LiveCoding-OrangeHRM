@@ -1,17 +1,44 @@
 import commons.BaseTest;
+import commons.PageGenerator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pageObjects.AdminPageObject;
+
+import java.util.Scanner;
 
 public class TC_Template  extends BaseTest {
+    WebDriver driver;
+
+    @Parameters({"browser", "url2"})
+    @BeforeClass
+    public void Before_Test(String browser, String url){
+        driver = getBrowserDriver(browser, url);
+    }
 
     @Test
-    public void Before_Test(){
-        WebDriver driver = getBrowserDriver("edge", "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+    public void TC_01(){
 
-        driver.findElement(By.cssSelector("input[name='username']")).sendKeys("aaa");
-        driver.findElement(By.cssSelector("input[name='username']")).sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
-        driver.findElement(By.cssSelector("input[name='username']")).sendKeys("bbb");
+    }
+    @Test
+    public void TC_02(){
+
+    }
+    @Test
+    public void TC_03(){
+
+    }
+    @Test
+    public void TC_04(){
+
+    }
+
+    @AfterClass
+    public void After_Test(){
+
     }
 }

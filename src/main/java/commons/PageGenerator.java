@@ -33,4 +33,8 @@ public class PageGenerator {
     public static PersonalDetailsPageObject getPersonalDetailsPage(WebDriver driver) {
         return new PersonalDetailsPageObject(driver);
     }
+
+    public static UserManagementPageObject getUserMagementPage(WebDriver driver) {
+        return new UserManagementPageObject(driver);
+    }
 }

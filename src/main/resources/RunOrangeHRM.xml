@@ -12,8 +12,8 @@
     <test name="Run on Chrome" >
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="PIM_Add_Employee"/>
-
+<!--            <class name="PIM_Add_Employee"/>-->
+            <class name="Admin"/>
         </classes>
     </test>
     <!--    <test name="Run on Firefox">-->
