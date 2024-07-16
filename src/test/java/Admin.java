@@ -11,6 +11,8 @@ import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.UserManagementPageObject;
 
+import java.io.IOException;
+
 public class Admin extends BaseTest {
     WebDriver driver;
 
@@ -54,18 +56,21 @@ public class Admin extends BaseTest {
         verifyEquals(userManagementPage.getConfirmPasswordErrorMessage(),"Required");
     }
     @Test
-    public void Add_Role_02_Must_Be_Employee_To_Add_Role(){
+    public void Add_Role_02_Must_Be_Employee_To_Add_Role() {
         userManagementPage.selectEmployeeName(invalidEmployeeName);
         userManagementPage.sleepInSecond(3);
 
         verifyEquals(userManagementPage.getEmployeeNameErrorMessage(),"Invalid");
+        userManagementPage.takeScreenshot(driver, "C:\\Users\\hidey\\OneDrive\\Desktop\\New folder", "New photo");
     }
-//    @Test
-//    public void Add_Role_03_Username_Must_Be_Unique(){
-//        userManagementPage.setTexToUsernameTextBox(GlobalConstant.ADMIN_USERNAME);
-//
-//        verifyEquals(userManagementPage.getUsernameErrorMessage(), "Already exists");
-//    }
+    @Test
+    public void Add_Role_03_Username_Must_Be_Unique(){
+        userManagementPage.setTexToUsernameTextBox(GlobalConstant.ADMIN_USERNAME);
+        userManagementPage.sleepInSecond(2);
+
+        verifyEquals(userManagementPage.getUsernameErrorMessage(), "Already exists");
+
+    }
 //    @Test
 //    public void Add_Role_04_Username_Must_Be_In_Valid_Length(){
 //        userManagementPage.setTexToUsernameTextBox(shortUsername);
@@ -121,7 +126,7 @@ public class Admin extends BaseTest {
 //
 //    }
 //    @AfterClass
-    public void After_Test(){
-
-    }
+//    public void After_Test(){
+//
+//    }
 }

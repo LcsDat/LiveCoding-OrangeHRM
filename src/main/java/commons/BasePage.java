@@ -1,5 +1,7 @@
 package commons;
 
+import io.qameta.allure.Step;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
@@ -8,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
@@ -544,5 +548,16 @@ public class BasePage {
 
     public void setDriver(WebDriver driver) {
         this.driver = driver;
+    }
+
+    @Step("Take screenshot {2}")
+    public void takeScreenshot(WebDriver driver, String path, String screenshotName) {
+        try {
+            FileUtils.copyFile(((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE),
+                    new File(path + File.separator + screenshotName + ".png"));
+        } catch  (IOException e) {
+            System.out.println(e.getStackTrace());
+        }
+
     }
 }
