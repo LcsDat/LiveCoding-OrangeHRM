@@ -34,7 +34,6 @@ public class UserManagementPageObject extends BasePage {
     public void selectEmployeeName(String value) {
         waitForElementClickable(UserManagementPageUI.EMPLOYEE_NAME_TEXTBOX);
         sendKeysToElement(UserManagementPageUI.EMPLOYEE_NAME_TEXTBOX, value);
-//        sleepInSecond(2);
         if(isElementDisplayed(UserManagementPageUI.EMPLOYEE_NAME_OPTION)) clickToElement(UserManagementPageUI.EMPLOYEE_NAME_OPTION);
         else clickToElement(UserManagementPageUI.EMPLOYEE_NAME_NOOPTION);
     }
@@ -82,5 +81,10 @@ public class UserManagementPageObject extends BasePage {
     public String  getStatusErrorMessage() {
         waitForElementVisible(UserManagementPageUI.STATUS_ERROR_LABEL);
         return getElementText(UserManagementPageUI.STATUS_ERROR_LABEL);
+    }
+
+    public String getErrorMessage(String labelName){
+        waitForElementVisible(UserManagementPageUI.DYNAMIC_ERROR_LABEL, labelName);
+        return getElementText(UserManagementPageUI.DYNAMIC_ERROR_LABEL, labelName);
     }
 }

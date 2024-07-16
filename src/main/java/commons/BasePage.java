@@ -560,4 +560,18 @@ public class BasePage {
         }
 
     }
+
+    /**
+     * Use to store screenshot in the project
+     */
+    @Step("Take screenshot {2}")
+    public void takeScreenshot(WebDriver driver, String screenshotName) {
+        try {
+            FileUtils.copyFile(((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE),
+                    new File(GlobalConstant.SCREENSHOT_PATH + File.separator + screenshotName + ".png"));
+        } catch  (IOException e) {
+            System.out.println(e.getStackTrace());
+        }
+
+    }
 }

@@ -23,4 +23,6 @@ public class UserManagementPageUI {
     public static final String USERNAME_ERROR_LABEL ="xpath=//label[text()='Username']/parent::div/following-sibling::span";
     public static final String PASSWORD_ERROR_LABEL ="xpath=//label[text()='Password']/parent::div/following-sibling::span";
     public static final String CONFIRM_PASSWORD_ERROR_LABEL ="xpath=//label[text()='Confirm Password']/parent::div/following-sibling::span";
+
+    public static final String DYNAMIC_ERROR_LABEL ="xpath=//label[text()='%s']/parent::div/following-sibling::span";
 }

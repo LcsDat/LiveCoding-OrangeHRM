@@ -130,6 +130,22 @@ public class BaseTest {
      * @param condition the boolean condition to verify
      * @return true if the condition is true, false otherwise
      */
+    @Step("Verify true with screenshot")
+    protected boolean verifyTrue(boolean condition, String screenshotName) {
+        boolean pass = true;
+        try {
+            Assert.assertTrue(condition);
+        } catch (Throwable e) {
+            pass = false;
+            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+            Reporter.getCurrentTestResult().setThrowable(e);
+        }
+        if (pass){
+            AllureTestListener.saveScreenshotPNG(screenshotName,driver);
+        }
+        return pass;
+    }
+
     @Step("Verify true")
     protected boolean verifyTrue(boolean condition) {
         boolean pass = true;
@@ -140,9 +156,6 @@ public class BaseTest {
             VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
             Reporter.getCurrentTestResult().setThrowable(e);
         }
-        if (pass){
-            AllureTestListener.saveScreenshotPNG("TC01",driver);
-        }
         return pass;
     }
 
@@ -152,7 +165,7 @@ public class BaseTest {
      * @param condition the boolean condition to verify
      * @return true if the condition is false, true otherwise
      */
-    @Step("Verify true")
+    @Step("Verify false")
     protected boolean verifyFalse(boolean condition) {
         boolean pass = true;
         try {
@@ -165,6 +178,24 @@ public class BaseTest {
         return pass;
     }
 
+    @Step("Verify false with screenshot")
+    protected boolean verifyFalse(boolean condition, String screenshotName) {
+        boolean pass = true;
+        try {
+            Assert.assertFalse(condition);
+        } catch (Throwable e) {
+            pass = false;
+            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+            Reporter.getCurrentTestResult().setThrowable(e);
+        }
+
+        if (pass){
+            AllureTestListener.saveScreenshotPNG(screenshotName,driver);
+        }
+
+        return pass;
+    }
+
     /**
      * Verifies that two objects are equal test cases will run till the end.
      *
@@ -172,8 +203,8 @@ public class BaseTest {
      * @param expected the expected object
      * @return true if the objects are equal, false otherwise
      */
-    @Step("Verify equal")
-    protected boolean verifyEquals(Object actual, Object expected) {
+    @Step("Verify equal with screenshot")
+    protected boolean verifyEquals(Object actual, Object expected, String screenshotName) {
         boolean pass = true;
         try {
             Assert.assertEquals(actual, expected);
@@ -183,8 +214,22 @@ public class BaseTest {
             Reporter.getCurrentTestResult().setThrowable(e);
         }
         if (pass){
-            AllureTestListener.saveScreenshotPNG("TC02",driver);
+            AllureTestListener.saveScreenshotPNG(screenshotName,driver);
         }
+        return pass;
+    }
+
+    @Step("Verify equal with screenshot")
+    protected boolean verifyEquals(Object actual, Object expected) {
+        boolean pass = true;
+        try {
+            Assert.assertEquals(actual, expected);
+        } catch (Throwable e) {
+            pass = false;
+            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+            Reporter.getCurrentTestResult().setThrowable(e);
+        }
+
         return pass;
     }
 
